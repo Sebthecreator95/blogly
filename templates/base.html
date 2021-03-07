@@ -10,6 +10,12 @@
   <link rel="stylesheet" href="/static/app.css">
 </head>
 <body>
+  <h1 class='text-center text-decoration-underline'>{% block heading %}{% endblock %}</h1>
+  <nav class='navbar'>
+    <a href='/'>Posts</a>
+    <a href='/users'>Users</a>
+    <a href='/tags'>Tags</a>
+  </nav>
 
 <main>
   {% block content %}{% endblock %}

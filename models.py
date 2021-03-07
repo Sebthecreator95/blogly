@@ -12,7 +12,7 @@ class User(db.Model):
     @property
     def full_name(self):
         """Get Full Name"""
-        return f"{self.first_name} {self.last_name}"
+        return f'{self.first_name} {self.last_name}'
     def __repr__(self):
         u = self
         return f'<User_id={u.id} username={u.username} first_name={u.first_name} last_name={u.last_name} image_url={u.image_url}>'
@@ -45,3 +45,21 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     username = db.Column(db.Text, db.ForeignKey('users.username'), nullable=False)
     
+class Tag(db.Model):
+    """Tag that can be added to posts."""
+
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False, unique=True)
+
+    posts = db.relationship('Post', secondary="posts_tags", backref="tags")
+
+class PostTag(db.Model):
+    """Tag on a post."""
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+
+
